@@ -1,98 +1,147 @@
-def main():
-    
-    datos = []
-    
+"""
+PROYECTO CRISTIAN ALVAREZ, PRODUCTOS DE COMIDA
+"""
 
-    # asociamos cada eleccion con una funcion de las creadas
-    
-    while True:
-
-        eleccion = menu()
-        
-        if eleccion == '1':
-            insertar_elemento(datos)
-        
-        elif eleccion == '2':
-           buscar_elemento(datos)
-        elif eleccion == '3':
-            modificar_elemento(datos)
-        elif eleccion == '4':
-            eliminar_datos(datos)
-        elif eleccion == '5':
-            mostrar_datos(datos)
-        else :
-            break;
-        
-        
-        
+# array con todos los productos
+productos = []
 
 
-        
-        
+def insertar_elemento(datos):
+    """
+    pedir datos , los valida y los añade a la lista
+    """
+    print("\n--- Insertar producto ---")
 
-            
+    nombre = input("Nombre del producto: ").strip()
+    # validacion basica
+    if not nombre:
+        print(" El nombre no puede estar vacío")
+        return
 
-    
-    
-def insertar_elementos(datos):
+    # validamos el precio con el try catch
+    try:
+        precio = float(input("Precio del producto: "))
+    except ValueError:
+        print("El precio debe ser un número")
+        return
 
-    while True:
-        id_producto = int(input("Ingrese el ID del producto (o 'salir' para terminar): ")).strip()
-        
-        ## comprobamos si es salir para salir del bucle
-        if id_producto.lower() == 'salir':
-            break
+    # Crear producto
+    producto = {"nombre": nombre, "precio": precio}
 
-        try: 
-            id_producto = int(id_producto)
-        
-        except ValueError:
-            print("Debe ingresar un numero válido o salir para salir")
-
-        continue
-
-
-        
-        
-        nombre = input("Ingrese el nombre del producto (o 'salir' para terminar): ").strip()
-        if nombre.lower() == 'salir' :
-                break
-
-        
+    datos.append(producto)
+    print("Producto añadido correctamente")
 
 
-
-
-def menu():
-    print("=== Menú Principal ===")
-    print("1. Añadir elemento")
-    print("2. Buscar elemento")
-    print("3. Modificar elemento")
-    print("4. Eliminar elemento")
-    print("5. Mostrar todos")
-    print("6. Salir")
-    
-    eleccion = input("Seleccione una opción: ")
-    return eleccion
-
-
-def mostrar_mensaje_salida():
-    print("Gracias por usar el programa. ¡Hasta luego!")
-
-            
 def buscar_elemento(datos):
-    print("Hola")
+    """
+    buscar un producto por su nombre
+    """
+    print("\n--- Buscar producto ---")
+    nombre = input("Nombre del producto a buscar: ").strip()
+
+    for p in datos:
+        if p["nombre"].lower() == nombre.lower():
+            print(f"Producto encontrado: {p}")
+            return p
+
+    print("Producto no encontrado")
+    return None
 
 
 def modificar_elemento(datos):
-    print("Hola")
+    """
+    permite modificar el precio de un producto existente
+    """
+    print("\n--- Modificar producto ---")
+    nombre = input("Nombre del producto a modificar: ").strip()
+
+    # Buscar producto
+    for p in datos:
+        if p["nombre"].lower() == nombre.lower():
+            print("Producto encontrado:", p)
+            try:
+                nuevo_precio = float(input("Nuevo precio: "))
+                p["precio"] = nuevo_precio
+                print("Producto modificado")
+            except ValueError:
+                print("Debes ingresar un número válido")
+            return
+
+    print("Producto no encontrado")
+
 
 def eliminar_elemento(datos):
-    print("Hola")
+    """
+    eliminar un producto si existe
+    manejo de errores si no esta el producto en la lista
+    """
+    print("\n--- Eliminar producto ---")
+    nombre = input("Nombre del producto a eliminar: ").strip()
+
+    for i, p in enumerate(datos):
+        if p["nombre"].lower() == nombre.lower():
+            del datos[i]
+            print("Producto eliminado correctamente")
+            return
+
+    print("No se encontró el producto")
+
 
 def mostrar_todos(datos):
-    print("Hola")
-    
-    
+    """
+    Muestra todos los productos con formato.
+    """
+    print("\n--- Lista de productos ---")
+
+    if not datos:
+        print("No hay productos registrados")
+        return
+
+    for i, p in enumerate(datos, start=1):
+        print(f"{i}. {p['nombre']} - ${p['precio']}")
 
 
+# ==========================
+# menu interactivo
+# ==========================
+
+
+def menu():
+    """
+    menu principal
+    """
+    while True:
+        print(
+            """
+=========== TIENDA DE COMIDA ===========
+1. Añadir producto
+2. Buscar producto
+3. Modificar producto
+4. Eliminar producto
+5. Mostrar todos
+6. Salir
+"""
+        )
+
+        opcion = input("Elige una opción: ")
+
+        if opcion == "1":
+            insertar_elemento(productos)
+        elif opcion == "2":
+            buscar_elemento(productos)
+        elif opcion == "3":
+            modificar_elemento(productos)
+        elif opcion == "4":
+            eliminar_elemento(productos)
+        elif opcion == "5":
+            mostrar_todos(productos)
+        elif opcion == "6":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción inválida Intenta nuevamente.")
+
+
+# solo se ejecuta si corres este archivo
+if __name__ == "__main__":
+    menu()
