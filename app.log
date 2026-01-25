@@ -1,0 +1,7 @@
+2026-01-26 00:06:56,126 - INFO - Aplicación iniciada
+2026-01-26 00:06:56,126 - INFO - Archivo productos.json cargado correctamente
+2026-01-26 00:07:05,042 - INFO - Producto encontrado: Pera
+2026-01-26 00:07:15,484 - INFO - Archivo productos.json guardado correctamente
+2026-01-26 00:07:15,484 - INFO - Producto añadido: Manzana - 5.0€
+2026-01-26 00:07:17,222 - INFO - Listado de productos mostrado correctamente
+2026-01-26 00:07:20,062 - INFO - Aplicación cerrada por el usuario
